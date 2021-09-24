@@ -14,7 +14,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
+        'guard' => 'custom',
         'passwords' => 'users',
     ],
 
@@ -40,6 +40,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'custom' => [
+            'driver' => 'json',
+            'provider' => 'nosql',
+          ],
     ],
 
     /*
@@ -63,6 +67,9 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+        'nosql' => [
+            'driver' => 'nosql'
         ],
 
         // 'users' => [
