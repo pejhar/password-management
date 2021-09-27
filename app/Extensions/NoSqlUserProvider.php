@@ -51,7 +51,7 @@ class NoSqlUserProvider implements UserProvider
   public function validateCredentials(Authenticatable $user, array $credentials)
   {
     return ($credentials['username'] == $user->getAuthIdentifier() &&
-      md5($credentials['password']) == $user->getAuthPassword());
+      $credentials['password'] == $user->getAuthPassword());
   }
 
   public function retrieveById($identifier)

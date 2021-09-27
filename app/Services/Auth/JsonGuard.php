@@ -93,13 +93,13 @@ class JsonGuard implements Guard
       if (!$credentials = $this->getJsonParams()) {
         return false;
       }
+      $credentials['password'] = MD5($this->getJsonParams()['password']);
     }
 
     $user = $this->provider->retrieveByCredentials($credentials);
 
     if (!is_null($user) && $this->provider->validateCredentials($user, $credentials)) {
       $this->setUser($user);
-
       return true;
     } else {
       return false;
@@ -115,6 +115,9 @@ class JsonGuard implements Guard
   public function setUser(Authenticatable $user)
   {
     $this->user = $user;
+    session()->put('user.id', $this->user()->getUserId());
+    session()->put('user.username', $this->user()->getAuthIdentifier());
+    session()->put('user.password', $this->user()->getAuthPassword());
     return $this;
   }
 
@@ -125,8 +128,8 @@ class JsonGuard implements Guard
    */
   public function logout()
   {
+    session()->forget('user'); 
     $this->user = null;
     return $this;
   }
 }
-
