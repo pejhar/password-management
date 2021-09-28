@@ -26,7 +26,7 @@ Route::get('/logout', ['middleware' => ['session'], LogoutController::class, 'ha
 Route::middleware(['session.auth'])->prefix('/password')->group(function () {
     Route::get('/', [PasswordController::class, 'list'])->name('list_password');
     Route::post('/', [PasswordController::class, 'create'])->name('password_create');
-    Route::get('/{password_id}', [PasswordController::class, 'show'])->name('show_password');
+    Route::get('/{password_id}', [PasswordController::class, 'showPassword'])->name('show_password');
     Route::post('/{password_id}', [PasswordController::class, 'update'])->name('password_update');
     Route::delete('/{password_id}', [PasswordController::class, 'delete'])->name('password_delete');
 });

@@ -36,7 +36,7 @@ class PasswordType{
 
     public function update($id, array $collection)
     { 
-
+        //
     }
 
 

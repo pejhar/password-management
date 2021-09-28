@@ -13,6 +13,7 @@ class PasswordTypeDatabase implements NosqlServiceInterface
   private $dbPath;
   private $dbFile;
 
+  
   public function __construct($dbPath, $dbFile)
   {
     $this->dbPath = $dbPath;
@@ -32,15 +33,14 @@ class PasswordTypeDatabase implements NosqlServiceInterface
         foreach ($conditions  as $cKey => $cVal) {
           if ($data[$cKey] === $cVal) {
             $currentMatch = true;
-          }else{
+          } else {
             $currentMatch = false;
             break;
           }
         }
-        if($currentMatch){
+        if ($currentMatch) {
           $userPasswordTypeList[] = $data;
         }
-        
       }
     }
 
@@ -84,7 +84,7 @@ class PasswordTypeDatabase implements NosqlServiceInterface
     return $this->writeDataBase($typesWithoutDeletedItem);
   }
 
-  
+
   private function readDataBase()
   {
     $exists = Storage::disk($this->dbPath)->has($this->dbFile);
@@ -105,5 +105,6 @@ class PasswordTypeDatabase implements NosqlServiceInterface
   {
     return Storage::disk($this->dbPath)->put($this->dbFile, serialize([]));
   }
+
 
 }

@@ -53,11 +53,15 @@ class UserDatabase implements NosqlServiceInterface
 
 
   public function update($id, array $collection)
-  { }
+  {
+    // 
+  }
 
 
   public function delete($id)
-  { }
+  {
+    // 
+  }
 
 
   private function readDataBase()
@@ -81,3 +85,4 @@ class UserDatabase implements NosqlServiceInterface
     return Storage::disk($this->dbPath)->put($this->dbFile, serialize(config('nosql.defaults.default_user')));
   }
 }
+

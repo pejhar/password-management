@@ -9,9 +9,12 @@ use Illuminate\Contracts\Auth\Authenticatable;
 
 class JsonGuard implements Guard
 {
+
+  
   protected $request;
   protected $provider;
   protected $user;
+
 
   /**
    * Create a new authentication guard.
@@ -27,6 +30,7 @@ class JsonGuard implements Guard
     $this->user = null;
   }
 
+
   /**
    * Determine if the current user is authenticated.
    *
@@ -37,6 +41,7 @@ class JsonGuard implements Guard
     return !is_null($this->user());
   }
 
+
   /**
    * Determine if the current user is a guest.
    *
@@ -46,6 +51,7 @@ class JsonGuard implements Guard
   {
     return !$this->check();
   }
+
 
   /**
    * Get the currently authenticated user.
@@ -59,6 +65,7 @@ class JsonGuard implements Guard
     }
   }
 
+
   /**
    * Get the JSON params from the current request
    *
@@ -69,6 +76,7 @@ class JsonGuard implements Guard
     $jsondata = $this->request->all();
     return (!empty($jsondata) ? $jsondata : null);
   }
+
 
   /**
    * Get the ID for the currently authenticated user.
@@ -81,6 +89,7 @@ class JsonGuard implements Guard
       return $this->user()->getAuthIdentifier();
     }
   }
+
 
   /**
    * Validate a user's credentials.
@@ -106,6 +115,7 @@ class JsonGuard implements Guard
     }
   }
 
+
   /**
    * Set the current user.
    *
@@ -121,6 +131,7 @@ class JsonGuard implements Guard
     return $this;
   }
 
+
   /**
    * Logout user
    *
@@ -128,8 +139,10 @@ class JsonGuard implements Guard
    */
   public function logout()
   {
-    session()->forget('user'); 
+    session()->forget('user');
     $this->user = null;
     return $this;
   }
+
+
 }

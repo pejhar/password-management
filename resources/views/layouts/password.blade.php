@@ -104,16 +104,6 @@
                         $("#update_title").addClass("input-error");
                         valid = false;
                     }
-                    if (!password) {
-                        $("#update_password_info").html("required.");
-                        $("#update_password").addClass("input-error");
-                        valid = false;
-                    }
-                    if (!retype_password) {
-                        $("#update_retype_password_info").html("required.");
-                        $("#update_retype_password").addClass("input-error");
-                        valid = false;
-                    }
                     if (password !== retype_password) {
                         $("#update_retype_password_info").html("not matching.");
                         $("#update_retype_password").addClass("input-error");
@@ -306,28 +296,34 @@
 
     <!--update Popup-->
     @if(!empty($passwords) && count($passwords))
-        <div id="update_popup">
-            <form class="contact-form" action="{{ route('password_delete',$password['id']) }}" id="update_form"
-                method="post">
+    <div id="update_popup">
+        <form class="contact-form" action="{{ route('password_delete',$password['id']) }}" id="update_form"
+            method="post">
 
-                @csrf
+            @csrf
 
-                <div class="d-flex justify-content-start">
-                    <button id="btn_hide_update_popup" type="button" class="close" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <h3 class="d-flex justify-content-center">Update Password</h3>
+            <div class="d-flex justify-content-start">
+                <button id="btn_hide_update_popup" type="button" class="close" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <h3 class="d-flex justify-content-center">Update Password</h3>
+            <div>
                 <div>
-                    <div>
-                        <label>Title: </label><span id="update_title_info" class="popup-form"></span>
-                    </div>
-                    <div>
-                        <input type="text" id="update_title" name="title" class="input-box" />
-                    </div>
+                    <label>Title: </label><span id="update_title_info" class="popup-form"></span>
                 </div>
                 <div>
+                    <input type="text" id="update_title" name="title" class="input-box" />
+                </div>
+            </div>
+            <button type="button"  id="tgl_update_password" name="tgl_update_password" class="btn btn-outline-danger" data-toggle="collapse" data-target="#clp_update_password"
+                aria-expanded="false" aria-controls="clp_update_password">
+                <     Edit Password Too     >
+            </button>
+            <div class="collapse" id="clp_update_password" name="clp_update_password">
+                <div>
                     <div>
+                        <h2></h2>
                         <label>Password: </label><span id="update_password_info" class="popup-form"></span>
                     </div>
                     <div>
@@ -342,26 +338,28 @@
                         <input type="password" id="update_retype_password" name="retype_password" class="input-box" />
                     </div>
                 </div>
+            </div>
+            <div>
                 <div>
-                    <div>
-                        <label>Choose a password Type: </label><span id="update_password_type_info"
-                            class="popup-form"></span>
-                    </div>
-                    <div>
-                        <select name="password_type" id="update_password_type" class="input-box">
-                            @if(!empty($password_types) && count($password_types))
-                                @foreach($password_types as $key => $password_type)
-                                <option value={{ $password_type['id'] }}>{{ $password_type['title'] }}</option>
-                                @endforeach
-                            @endif
-                        </select>
-                    </div>
+                    <h2></h2>
+                    <label>Choose a password Type: </label><span id="update_password_type_info"
+                        class="popup-form"></span>
                 </div>
                 <div>
-                    <input type="submit" id="update_ok" name="ok" value="OK" />
+                    <select name="password_type" id="update_password_type" class="input-box">
+                        @if(!empty($password_types) && count($password_types))
+                        @foreach($password_types as $key => $password_type)
+                        <option value={{ $password_type['id'] }}>{{ $password_type['title'] }}</option>
+                        @endforeach
+                        @endif
+                    </select>
                 </div>
-            </form>
-        </div>
+            </div>
+            <div>
+                <input type="submit" id="update_ok" name="ok" value="OK" />
+            </div>
+        </form>
+    </div>
     @endif
 
     @jquery

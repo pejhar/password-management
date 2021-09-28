@@ -31,3 +31,15 @@ For users, we don't need any CRUD panel. We only need to add or remove users man
 6- You should use Git in this project
 
 7- Finally, You can compress the project and send it to us.
+
+## .ENV Configuration
+
+```php
+DB_PATH="text_db_files"
+USER_FILE="user.txt"
+PASSWORD_FILE="password.txt"
+PASSWORD_TYPE_FILE="password_type.txt"
+DEFAULT_USER_ID="lDN00nMXN"
+DEFAULT_USERNAME="root"
+DEFAULT_USER_PASSWORD="25d55ad283aa400af464c76d713c07ad"
+```

@@ -4,15 +4,16 @@ namespace App\Models\Vault;
 
 use App\Services\Contracts\NosqlServiceInterface;
 
-class Password {
-    
+class Password
+{
+
 
     private $conn;
-  
+
 
     public function __construct(NosqlServiceInterface $conn)
     {
-      $this->conn = $conn;
+        $this->conn = $conn;
     }
 
 
@@ -35,8 +36,8 @@ class Password {
 
 
     public function update($id, array $collection)
-    { 
-
+    {
+        return $this->conn->update($id, $collection);
     }
 
 
@@ -45,5 +46,6 @@ class Password {
         return $this->conn->delete($id);
     }
 
-
+    
 }
+

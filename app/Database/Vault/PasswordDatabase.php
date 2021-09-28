@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 class PasswordDatabase implements NosqlServiceInterface
 {
 
-  
+
   private $dbPath;
   private $dbFile;
 
@@ -32,15 +32,14 @@ class PasswordDatabase implements NosqlServiceInterface
         foreach ($conditions  as $cKey => $cVal) {
           if ($data[$cKey] === $cVal) {
             $currentMatch = true;
-          }else{
+          } else {
             $currentMatch = false;
             break;
           }
         }
-        if($currentMatch){
+        if ($currentMatch) {
           $userPasswordList[] = $data;
         }
-        
       }
     }
 
@@ -67,7 +66,19 @@ class PasswordDatabase implements NosqlServiceInterface
 
 
   public function update($id, array $collection)
-  { }
+  {
+    $updatedPasswordList = [];
+    $passwordList = $this->readDataBase();
+    foreach ($passwordList as $key => $val) {
+      if ($val['id'] === $id) {
+        $updatedPasswordList[] = $collection;
+      } else {
+        $updatedPasswordList[] = $val;
+      }
+    }
+
+    return $this->writeDataBase($updatedPasswordList);
+  }
 
 
   public function delete($id)
@@ -105,6 +116,4 @@ class PasswordDatabase implements NosqlServiceInterface
   {
     return Storage::disk($this->dbPath)->put($this->dbFile, serialize([]));
   }
-
-
 }

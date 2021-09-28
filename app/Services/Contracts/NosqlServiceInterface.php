@@ -1,17 +1,20 @@
 <?php
 
 namespace App\Services\Contracts;
- 
-Interface NosqlServiceInterface
+
+interface NosqlServiceInterface
 {
+
+
   /**
    * Create a Collection
    *
    * @param array  $collection   Collection
    * @return boolean
    */
-  public function create(Array $collection);
-  
+  public function create(array $collection);
+
+
   /**
    * Update a Collection
    *
@@ -19,8 +22,9 @@ Interface NosqlServiceInterface
    * @param array  $collection   Collection
    * @return boolean
    */
-  public function update($id, Array $collection);
- 
+  public function update($id, array $collection);
+
+
   /**
    * Delete a Collection
    *
@@ -28,13 +32,15 @@ Interface NosqlServiceInterface
    * @return boolean
    */
   public function delete($id);
-  
+
+
   /**
    * Search Collection(s)
    *
    * @param array  $criteria   Key-value criteria
    * @return array
    */
-  public function get(Array $criteria);
-  
+  public function get(array $criteria);
+
+
 }

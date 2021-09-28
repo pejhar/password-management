@@ -10,9 +10,9 @@ class SessionAuth
 {
 
     public function __construct(Guard $auth)
-	{
-		$this->auth = $auth;
-	}
+    {
+        $this->auth = $auth;
+    }
 
     /**
      * Handle an incoming request.
