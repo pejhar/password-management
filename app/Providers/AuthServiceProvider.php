@@ -3,12 +3,12 @@
 namespace App\Providers;
 
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use App\Services\Auth\JsonGuard;
 use App\Extensions\NoSqlUserProvider;
-use App\Database\NoSqlDatabase;
+use App\Database\Auth\UserDatabase;
 use App\Models\Auth\User;
+
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -21,6 +21,16 @@ class AuthServiceProvider extends ServiceProvider
         'App\Model' => 'App\Policies\ModelPolicy',
     ];
 
+
+    public function register()
+    {
+        $this->app->bind(
+            'App\Services\Contracts\NosqlServiceInterface',
+            'App\Database\Auth\UserDatabase',
+        );
+    }
+
+
     /**
    * Register any authentication / authorization services.
    *
@@ -30,12 +40,12 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        $this->app->bind('App\Database\NoSqlDatabase', function ($app) {
-            return new NoSqlDatabase(config('nosql.defaults.host'), config('nosql.defaults.port'), config('nosql.defaults.database'));
+        // bind user dtabase
+        $this->app->bind('App\Database\Auth\UserDatabase', function ($app) {
+            return new UserDatabase(config('nosql.defaults.db_path'), config('nosql.defaults.user_file'));
         });
-
         $this->app->bind('App\Models\Auth\User', function ($app) {
-            return new User($app->make('App\Database\NoSqlDatabase'));
+            return new User($app->make('App\Database\Auth\UserDatabase'));
         });
 
         // add custom guard provider
@@ -49,11 +59,5 @@ class AuthServiceProvider extends ServiceProvider
         });
     }
 
-    public function register()
-    {
-        $this->app->bind(
-            'App\Services\Contracts\NosqlServiceInterface',
-            'App\Database\NoSqlDatabase'
-        );
-    }
+    
 }

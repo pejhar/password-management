@@ -9,9 +9,12 @@ use Illuminate\Contracts\Auth\Authenticatable;
 
 class JsonGuard implements Guard
 {
+
+  
   protected $request;
   protected $provider;
   protected $user;
+
 
   /**
    * Create a new authentication guard.
@@ -27,6 +30,7 @@ class JsonGuard implements Guard
     $this->user = null;
   }
 
+
   /**
    * Determine if the current user is authenticated.
    *
@@ -37,6 +41,7 @@ class JsonGuard implements Guard
     return !is_null($this->user());
   }
 
+
   /**
    * Determine if the current user is a guest.
    *
@@ -46,6 +51,7 @@ class JsonGuard implements Guard
   {
     return !$this->check();
   }
+
 
   /**
    * Get the currently authenticated user.
@@ -59,6 +65,7 @@ class JsonGuard implements Guard
     }
   }
 
+
   /**
    * Get the JSON params from the current request
    *
@@ -69,6 +76,7 @@ class JsonGuard implements Guard
     $jsondata = $this->request->all();
     return (!empty($jsondata) ? $jsondata : null);
   }
+
 
   /**
    * Get the ID for the currently authenticated user.
@@ -82,6 +90,7 @@ class JsonGuard implements Guard
     }
   }
 
+
   /**
    * Validate a user's credentials.
    *
@@ -93,18 +102,19 @@ class JsonGuard implements Guard
       if (!$credentials = $this->getJsonParams()) {
         return false;
       }
+      $credentials['password'] = MD5($this->getJsonParams()['password']);
     }
 
     $user = $this->provider->retrieveByCredentials($credentials);
 
     if (!is_null($user) && $this->provider->validateCredentials($user, $credentials)) {
       $this->setUser($user);
-
       return true;
     } else {
       return false;
     }
   }
+
 
   /**
    * Set the current user.
@@ -115,8 +125,12 @@ class JsonGuard implements Guard
   public function setUser(Authenticatable $user)
   {
     $this->user = $user;
+    session()->put('user.id', $this->user()->getUserId());
+    session()->put('user.username', $this->user()->getAuthIdentifier());
+    session()->put('user.password', $this->user()->getAuthPassword());
     return $this;
   }
+
 
   /**
    * Logout user
@@ -125,8 +139,10 @@ class JsonGuard implements Guard
    */
   public function logout()
   {
+    session()->forget('user');
     $this->user = null;
     return $this;
   }
-}
 
+
+}

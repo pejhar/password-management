@@ -2,7 +2,6 @@
 
 namespace App\Extensions;
 
-use Illuminate\Support\Str;
 use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Contracts\Auth\Authenticatable;
 
@@ -51,7 +50,7 @@ class NoSqlUserProvider implements UserProvider
   public function validateCredentials(Authenticatable $user, array $credentials)
   {
     return ($credentials['username'] == $user->getAuthIdentifier() &&
-      md5($credentials['password']) == $user->getAuthPassword());
+      $credentials['password'] == $user->getAuthPassword());
   }
 
   public function retrieveById($identifier)
@@ -63,4 +62,3 @@ class NoSqlUserProvider implements UserProvider
   public function updateRememberToken(Authenticatable $user, $token)
   { }
 }
-

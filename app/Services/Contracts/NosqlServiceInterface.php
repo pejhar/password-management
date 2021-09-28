@@ -1,43 +1,46 @@
 <?php
 
 namespace App\Services\Contracts;
- 
-Interface NosqlServiceInterface
+
+interface NosqlServiceInterface
 {
+
+
   /**
-   * Create a Document
+   * Create a Collection
    *
-   * @param string $file File Name
-   * @param array  $document   Document
+   * @param array  $collection   Collection
    * @return boolean
    */
-  public function create($file, Array $document);
-  
+  public function create(array $collection);
+
+
   /**
-   * Update a Document
+   * Update a Collection
    *
-   * @param string $file File Name
-   * @param mix    $id         Primary Id
-   * @param array  $document   Document
+   * @param string    $id         Primary Id
+   * @param array  $collection   Collection
    * @return boolean
    */
-  public function update($file, $id, Array $document);
- 
+  public function update($id, array $collection);
+
+
   /**
-   * Delete a Document
+   * Delete a Collection
    *
-   * @param string $file File Name
-   * @param mix    $id         Primary Id
+   * @param string    $id         Primary Id
    * @return boolean
    */
-  public function delete($file, $id);
-  
+  public function delete($id);
+
+
   /**
-   * Search Document(s)
+   * Search Collection(s)
    *
-   * @param string $file File Name
    * @param array  $criteria   Key-value criteria
    * @return array
    */
-  public function find($file, Array $criteria);
+  public function get(array $criteria);
+
+
 }
